@@ -1,2 +1,2 @@
 # IponApp
- A saving tracker app
+ A console-based saving tracker app

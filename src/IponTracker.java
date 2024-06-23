@@ -2,9 +2,10 @@ import java.util.HashMap;
 import java.util.Scanner;
 
 public class IponTracker {
-    private static HashMap<Double, Double> progress = new HashMap<Double, Double>();
-    private static HashMap<String, HashMap<Double,Double>> item = new HashMap<>();
+    private static HashMap<String, Double> progress = new HashMap<String, Double>();
+    private static HashMap<String, Double> item = new HashMap<String,Double>();
     private static Scanner userInput = new Scanner(System.in);
+
     public static void main(String[] args) {
         intro();
         menu();
@@ -17,7 +18,8 @@ public class IponTracker {
         System.out.println("[1] View all items");
         System.out.println("[2] Add new item");
         System.out.println("[3] Edit progress");
-        System.out.println("[4] Exit");
+        System.out.println("[4] Delete an item");
+        System.out.println("[5] Exit");
         System.out.print("Enter Choice: ");
 
         int choice = Integer.parseInt(userInput.nextLine());
@@ -30,9 +32,15 @@ public class IponTracker {
                 addItem();
                 menu();
                 break;
-            case 3:
+            case 3: //Edit progress
+                editProgress();
                 break;
-            case 4: //Exit progress
+            case 4: //Delete item
+                deleteItem();
+                menu();
+                break;
+            case 5: //Exit progress
+                System.out.println("Closing Program...");
                 break;
             default:
                 System.out.println("\nPlease enter a valid choice");
@@ -41,7 +49,24 @@ public class IponTracker {
         }
     }
     public static void viewAll(){
-        System.out.println(item);
+        try{
+            if(item.isEmpty()){
+                throw new itemIsEmptyException("\nYou have no items");
+            } else {
+                System.out.println("\nItem\tGoal\tProgress");
+                for(String i:item.keySet()){
+                    System.out.print(i);
+                    System.out.print("\t"+item.get(i));
+                    System.out.println("\t"+progress.get(i));
+//                    for(String a:progress.keySet()){
+//                    }
+                }
+            }
+        } catch(Exception e) {
+            System.out.println("\nSystem Message "+e);
+            menu();
+        }
+//        System.out.println(item);
     }
     public static void addItem(){
         System.out.print("Enter item name: ");
@@ -53,10 +78,57 @@ public class IponTracker {
         System.out.print("Enter your progress: ");
         Double goalProgress = Double.parseDouble(userInput.nextLine());
 
-        progress.put(goal,goalProgress);
-//        HashMap<Double,Double> itemProgress = new HashMap<Double,Double>();
-//        itemProgress.put(goal,goalProgress);
+        item.put(itemName, goal);
+        progress.put(itemName,goalProgress);
 
-        item.put(itemName, progress);
+        try{
+            if(goal >= goalProgress){
+                throw new goalReachedException("You Have reached your goal");
+            }
+        } catch(Exception e) {
+            System.out.println("\nSystem Message "+e);
+            menu();
+        }
+    }
+    public static void editProgress(){
+        System.out.print("Enter the item name to edit progress: ");
+        String itemName = userInput.nextLine();
+        try{
+            if (!item.containsKey(itemName)) {
+                throw new ItemNotFoundException("\nItem does not exist");
+            } else {
+                editor(itemName);
+            }
+        } catch(Exception e) {
+            System.out.println("\nSystem Message: "+e);
+            menu();
+        }
+//        return itemName;
+    }
+    public static void editor(String itemName){
+        System.out.print("\nUpdate progress for \""+itemName+"\": ");
+        double updatedProgress = Double.parseDouble(userInput.nextLine());
+
+        progress.replace(itemName,updatedProgress);
+
+
+        try{
+            if(item.get(itemName) >= updatedProgress){
+                throw new goalReachedException("You Have reached your goal");
+            }
+        } catch(Exception e) {
+            System.out.println("\nSystem Message "+e);
+            menu();
+        }
+//        progress.get(item.get("itemName"));
+//        System.out.println(item.get("itemName"));
+//        item.replace("itemName",);
+    }
+    public static void deleteItem(){
+        System.out.print("\nType the name the item to be deleted: ");
+        String deleteItem = userInput.nextLine();
+
+        item.remove(deleteItem);
+        progress.remove(deleteItem);
     }
 }

@@ -132,5 +132,6 @@ public class IponTracker {
 
         item.remove(deleteItem);
         progress.remove(deleteItem);
+        System.out.println("Item deleted");
     }
 }

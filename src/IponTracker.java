@@ -39,7 +39,7 @@ public class IponTracker {
                 deleteItem();
                 menu();
                 break;
-            case 5: //Exit progress
+            case 5: //Exit program
                 System.out.println("Closing Program...");
                 break;
             default:
@@ -81,14 +81,18 @@ public class IponTracker {
         item.put(itemName, goal);
         progress.put(itemName,goalProgress);
 
-        try{
-            if(goal >= goalProgress){
-                throw new goalReachedException("You Have reached your goal");
+        if(goalProgress >= goal){
+                System.out.println("You Have reached your goal");
             }
-        } catch(Exception e) {
-            System.out.println("\nSystem Message "+e);
-            menu();
-        }
+
+//        try{
+//            if(goal >= goalProgress){
+//                throw new goalReachedException("You Have reached your goal");
+//            }
+//        } catch(Exception e) {
+//            System.out.println("\nSystem Message "+e);
+//            menu();
+//        }
     }
     public static void editProgress(){
         System.out.print("Enter the item name to edit progress: ");
@@ -111,15 +115,13 @@ public class IponTracker {
 
         progress.replace(itemName,updatedProgress);
 
-
-        try{
-            if(item.get(itemName) >= updatedProgress){
-                throw new goalReachedException("You Have reached your goal");
+            if(progress.get(itemName) >= item.get(itemName)){
+                System.out.println("You Have reached your goal");
+            } else {
+                System.out.println("\nProgress Update");
+                System.out.println("You still have "+(item.get(itemName)-progress.get(itemName))+" left to reach you goal");
             }
-        } catch(Exception e) {
-            System.out.println("\nSystem Message "+e);
-            menu();
-        }
+
 //        progress.get(item.get("itemName"));
 //        System.out.println(item.get("itemName"));
 //        item.replace("itemName",);

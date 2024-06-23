@@ -26,18 +26,15 @@ public class IponApp {
         switch(choice){
             case 1: //View all item/s
                 viewAll();
-                menu();
                 break;
             case 2: //Add new item
                 addItem();
-                menu();
                 break;
             case 3: //Edit progress
                 editProgress();
                 break;
             case 4: //Delete item
                 deleteItem();
-                menu();
                 break;
             case 5: //Exit program
                 System.out.println("Closing Program...");
@@ -59,6 +56,7 @@ public class IponApp {
                     System.out.print("\t"+item.get(i));
                     System.out.println("\t"+progress.get(i));
                 }
+                menu();
             }
         } catch(Exception e) {
             System.out.println("\nSystem Message "+e);
@@ -81,6 +79,7 @@ public class IponApp {
         if(goalProgress >= goal){
                 System.out.println("You Have reached your goal");
             }
+        menu();
     }
     public static void editProgress(){
         System.out.print("Enter the item name to edit progress: ");
@@ -100,6 +99,7 @@ public class IponApp {
                     System.out.println("\nProgress Update");
                     System.out.println("You still have "+(item.get(itemName)-progress.get(itemName))+" left to reach you goal");
                 }
+                menu();
             }
         } catch(Exception e) {
             System.out.println("\nSystem Message: "+e);

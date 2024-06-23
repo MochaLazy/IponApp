@@ -1,7 +1,7 @@
 import java.util.HashMap;
 import java.util.Scanner;
 
-public class IponTracker {
+public class IponApp {
     private static HashMap<String, Double> progress = new HashMap<String, Double>();
     private static HashMap<String, Double> item = new HashMap<String,Double>();
     private static Scanner userInput = new Scanner(System.in);

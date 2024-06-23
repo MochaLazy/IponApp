@@ -110,8 +110,18 @@ public class IponApp {
         System.out.print("\nType the name the item to be deleted: ");
         String deleteItem = userInput.nextLine();
 
-        item.remove(deleteItem);
-        progress.remove(deleteItem);
-        System.out.println("Item deleted");
+        try{
+            if(!item.containsKey(deleteItem)){
+                throw new ItemNotFoundException("\nItem does not exist");
+            } else {
+                item.remove(deleteItem);
+                progress.remove(deleteItem);
+                System.out.println("Item deleted");
+                menu();
+            }
+        } catch(Exception e){
+            System.out.println("\nSystem Message: "+e);
+            menu();
+        }
     }
 }
